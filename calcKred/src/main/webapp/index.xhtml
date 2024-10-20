@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>JSF 01 - kalkulator kredytowy</title>
+</h:head>
+<h:body>
+
+	<h1>JSF 01 - kalkulator kredytowy</h1>
+
+	<h:form id="bla">
+  		Kwota kredytu: <h:inputText value="#{calcKredBB.ammount}" />
+		<br />
+  		Oprocentowanie: <h:inputText value="#{calcKredBB.interest}" />
+		<br />
+		Na ile lat: <h:inputText value="#{calcKredBB.years}" />
+		<br />
+		<h:messages id="msg" />
+		<h:commandButton value="Oblicz" action="#{calcKredBB.calculate()}"/>
+		<br />
+	</h:form>
+
+</h:body>
+</html>
