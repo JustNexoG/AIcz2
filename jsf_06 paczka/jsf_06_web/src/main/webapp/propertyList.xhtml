@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <meta charset="utf-8" />
+    <title>Lista nieruchomości</title>
+</h:head>
+<h:body style="background-color: #eee; margin: 0.5em;">
+
+    <p:panel header="Opcje wyszukiwania" toggleable="true" collapsed="true"
+             style="margin-bottom: 1em;">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="Adres:" />
+                <p:inputText value="#{propertyListBB.address}" />
+                <p:commandButton value="Szukaj" update="form-table" />
+            </h:panelGrid>
+        </h:form>
+    </p:panel>
+
+    <p:messages />
+
+    <h:form id="form-table" style="margin-bottom:1em;">
+
+        <p:commandButton value="Dodaj nieruchomość"
+                         action="#{propertyListBB.newProperty}" 
+                         style="margin-bottom:1em;" />
+
+        <p:dataTable value="#{propertyListBB.list}" var="p">
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Adres" />
+                </f:facet>
+                <h:outputText value="#{p.address}" />
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Cena" />
+                </f:facet>
+                <h:outputText value="#{p.price}" />
+            </p:column>
+
+            <p:column>
+			    <f:facet name="header">
+			        <h:outputText value="Opcje" />
+			    </f:facet>
+			
+			    <p:commandButton value="Edytuj"
+			                     action="#{propertyListBB.editProperty(p)}" />
+			
+			    <p:commandButton value="Usuń"
+			                     action="#{propertyListBB.deleteProperty(p)}" update="@form" />
+			
+			    <p:button outcome="propertyEditGET" value="Edytuj (GET)">
+				    <f:param name="p" value="#{p.idProperty}" />
+				</p:button>
+
+			</p:column>
+
+
+
+        </p:dataTable>
+    </h:form>
+
+</h:body>
+</html>

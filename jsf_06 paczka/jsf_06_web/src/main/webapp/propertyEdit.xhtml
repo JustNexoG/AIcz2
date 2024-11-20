@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:viewAction action="#{propertyEditBB.onLoad()}" />
+</f:metadata>
+
+<h:head>
+    <meta charset="utf-8" />
+    <title>Edycja nieruchomości</title>
+</h:head>
+
+<h:body style="background-color: #eee; margin: 0.5em;">
+
+    <p:panel toggleable="true" header="Edycja nieruchomości">
+        <h:form rendered="#{propertyEditBB.property != null}">
+            <h:panelGrid columns="3" cellpadding="5">
+
+                <!-- Adres -->
+                <h:outputLabel for="p-address" value="Adres:" />
+                <p:inputText id="p-address" value="#{propertyEditBB.property.address}"
+                             required="true" requiredMessage="Podaj adres" />
+                <p:message for="p-address" display="icon" />
+
+                <!-- Cena -->
+                <h:outputLabel for="p-price" value="Cena:" />
+                <p:inputText id="p-price" value="#{propertyEditBB.property.price}"
+                             required="true" requiredMessage="Podaj cenę" />
+                <p:message for="p-price" display="icon" />
+
+                <!-- Opis -->
+                <h:outputLabel for="p-description" value="Opis:" />
+                <p:inputTextarea id="p-description" value="#{propertyEditBB.property.description}" rows="4" cols="30" />
+                <p:message for="p-description" display="icon" />
+
+            </h:panelGrid>
+
+            <p:messages id="msgs" />
+
+            <!-- Przyciski -->
+            <p:commandButton value="Zapisz" action="#{propertyEditBB.saveData()}" style="margin-right: 1em;" update="@form" />
+            <p:button value="Anuluj" outcome="propertyList" />
+        </h:form>
+    </p:panel>
+
+</h:body>
+</html>
