@@ -1,0 +1,49 @@
+<ui:composition template="/templates/main-template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">Logowanie</ui:define>
+
+    <ui:define name="content">
+        <div class="page-container">
+            <div class="login-card">
+                <p:panel header="Zaloguj się" styleClass="ui-panel">
+                    <h:form>
+                        <p:messages id="loginMessages" autoUpdate="true" closable="true" />
+
+                        <div class="floating-label-container">
+                            <!-- Email -->
+                            <div class="floating-label">
+                                <p:inputText id="username" value="#{loginBB.username}" required="true" requiredMessage="Email jest wymagany" 
+                                    styleClass="floating-input" placeholder=" " />
+                                <label for="username">Adres e-mail lub telefon</label>
+                            </div>
+
+                            <!-- Hasło -->
+                            <div class="floating-label">
+                                <p:password id="password" value="#{loginBB.password}" required="true" requiredMessage="Hasło jest wymagane" 
+                                    styleClass="floating-input" placeholder=" " />
+                                <label for="password">Hasło</label>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-container">
+                            <p:selectBooleanCheckbox id="rememberMe" value="#{loginBB.rememberMe}" itemLabel="Zapamiętaj mnie" />
+                        </div>
+
+                        <div class="login-buttons">
+						    <p:commandButton value="Zaloguj się" action="#{loginBB.login}" update="loginMessages" 
+						        icon="pi pi-sign-in" styleClass="ui-button" />
+						
+						    <p:button value="Zarejestruj się" outcome="main.xhtml" 
+						        styleClass="ui-button-secondary" icon="pi pi-user-plus" />
+						</div>
+                    </h:form>
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

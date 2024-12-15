@@ -18,7 +18,9 @@ public class PropertyDAO {
     protected EntityManager em;
 
     public void create(Property property) {
+        System.out.println("Before persist: " + property);
         em.persist(property);
+        System.out.println("After persist: " + property);
     }
 
     public Property merge(Property property) {
@@ -33,6 +35,8 @@ public class PropertyDAO {
         return em.find(Property.class, id);
     }
 
+    
+    
     public List<Property> getFullList() {
         List<Property> list = null;
 

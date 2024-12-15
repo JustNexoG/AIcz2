@@ -2,6 +2,7 @@ package com.jsfcourse.property;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
@@ -26,49 +27,51 @@ public class PropertyEditBB implements Serializable {
     private Property loaded = null;
 
     @EJB
-    PropertyDAO propertyDAO;
+    private PropertyDAO propertyDAO;
 
     @Inject
-    FacesContext context;
+    private FacesContext context;
 
     @Inject
-    Flash flash;
+    private Flash flash;
 
     public Property getProperty() {
         return property;
     }
 
     public void onLoad() throws IOException {
-        // Pobranie obiektu Property z flasha
         loaded = (Property) flash.get("property");
 
         if (loaded != null) {
-            property = loaded; // Przypisanie załadowanej nieruchomości
+            property = loaded;
         } else {
-            context.addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błędne użycie systemu", null));
+            property = new Property(); // Inicjalizacja dla nowej nieruchomości
         }
     }
 
     public String saveData() {
-        // Brak obiektu nieruchomości
-        if (loaded == null) {
-            return PAGE_STAY_AT_THE_SAME;
-        }
-
         try {
-            if (property.getIdProperty() == 0) { // Nowa nieruchomość
+            if (property == null) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Brak danych nieruchomości.", null));
+                return PAGE_STAY_AT_THE_SAME;
+            }
+
+            // Obsługa tworzenia nowej nieruchomości
+            if (property.getIdProperty() == null) {
                 propertyDAO.create(property);
-            } else { // Aktualizacja istniejącej nieruchomości
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nieruchomość została dodana.", null));
+            } else {
+                // Aktualizacja istniejącej nieruchomości
                 propertyDAO.merge(property);
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nieruchomość została zaktualizowana.", null));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            context.addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wystąpił błąd podczas zapisu", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd podczas zapisywania danych.", null));
             return PAGE_STAY_AT_THE_SAME;
         }
 
         return PAGE_PROPERTY_LIST;
     }
+
 }
