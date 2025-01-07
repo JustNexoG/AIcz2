@@ -45,7 +45,7 @@ public class PropertyEditBB implements Serializable {
         if (loaded != null) {
             property = loaded;
         } else {
-            property = new Property(); // Inicjalizacja dla nowej nieruchomości
+            property = new Property();
         }
     }
 
@@ -55,13 +55,12 @@ public class PropertyEditBB implements Serializable {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Brak danych nieruchomości.", null));
                 return PAGE_STAY_AT_THE_SAME;
             }
-
-            // Obsługa tworzenia nowej nieruchomości
+            	//Dodawanie nowej 
             if (property.getIdProperty() == null) {
                 propertyDAO.create(property);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nieruchomość została dodana.", null));
             } else {
-                // Aktualizacja istniejącej nieruchomości
+                // Aktualizacja istniejącej
                 propertyDAO.merge(property);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nieruchomość została zaktualizowana.", null));
             }

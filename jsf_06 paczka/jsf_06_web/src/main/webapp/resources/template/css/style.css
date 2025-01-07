@@ -412,3 +412,34 @@ body {
     background-color: #a259ff;
     color: #fff;
 }
+
+/* Specyficzny styl dla tła rejestracji */
+.register-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 70%;
+    max-width: 700px;
+    height: auto;
+    margin: 5vh auto;
+    padding: 40px;
+    background: #111;
+    border-radius: 20px; /* Zaokrąglenie rogów */
+    box-shadow: 
+        0 0 15px #a259ff, 
+        0 0 30px #8a2be2, 
+        0 0 60px rgba(138, 43, 226, 0.8), 
+        0 0 80px rgba(138, 43, 226, 0.6);
+    transition: box-shadow 0.3s ease-in-out; /* Płynne przejście */
+}
+
+/* Efekt hover dla rejestracji */
+.register-card:hover {
+    box-shadow: 
+        0 0 20px #a259ff,
+        0 0 40px #8a2be2,
+        0 0 70px rgba(138, 43, 226, 0.9),
+        0 0 90px rgba(138, 43, 226, 0.7);
+    transition: box-shadow 0.3s ease-in-out;
+}

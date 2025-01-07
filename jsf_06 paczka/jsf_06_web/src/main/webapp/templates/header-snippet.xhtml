@@ -1,39 +1,36 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <div class="header">
+	    <div class="card">
+            <h:form>
+                <p:menubar hideDelay="1000">
+                    <f:facet name="start">
+                        <h:outputLink value="main.xhtml">HomeHub</h:outputLink>
+                    </f:facet>
 
-<div class="header">
-	<div class="card">
-		<h:form>
-			<p:growl id="messages" />
+                    <p:menuitem value="Strona główna" outcome="main.xhtml">
+                        <h:graphicImage library="template" name="img/logo.png" style="height:75px; width:90px; margin:0; padding:0;" />
+                    </p:menuitem>
 
-			<p:menubar hideDelay="1000">
-				<!-- Link na początek menu -->
-				<f:facet name="start">
-					<h:outputLink value="main.xhtml">
-						HomeHub
-					</h:outputLink>
-				</f:facet>
+                    <p:menuitem value="Lista nieruchomości" icon="pi pi-fw pi-home" outcome="propertyList.xhtml" />
+                    <p:menuitem value="Dodaj nieruchomość" icon="pi pi-fw pi-plus-circle" action="#{loginBB.goToAddProperty}" />
 
-				<!-- Link do Listy użytkowników -->
-				<p:menuitem value="Strona główna" outcome="main.xhtml">
-    				<h:graphicImage library="template" name="img/logo.png" style="height:75px; width:90px; margin:0; padding:0;" />
-				</p:menuitem>
+                    <!-- Nie zalogowany -->
+                    <p:menuitem value="Zaloguj się" icon="pi pi-fw pi-user" outcome="login.xhtml" rendered="#{empty loginBB.loggedUser}" />
+                    <p:menuitem value="Zarejestruj się" icon="pi pi-fw pi-user-plus" outcome="register.xhtml" rendered="#{empty loginBB.loggedUser}" />
 
-				<p:menuitem value="Lista nieruchomości" icon="pi pi-fw pi-home"
-					outcome="propertyList.xhtml" />
-				<p:menuitem value="Dodaj nieruchomość" icon="pi pi-fw pi-plus-circle"
-					outcome="propertyEdit.xhtml" />
-				<p:menuitem value="Zaloguj się" icon="pi pi-fw pi-user"
-					outcome="login.xhtml" />
+                    <!-- Po zalogowaniu -->
+                    <p:submenu label="Zalogowano na #{loginBB.loggedUser.firstName} (rola: #{roleBB.userRoles})" rendered="#{not empty loginBB.loggedUser}">
+                        <p:menuitem value="Wyloguj" action="#{loginBB.logout}" />
+                    </p:submenu>
 
-				<!-- Koniec menu -->
-				<f:facet name="end">
-				</f:facet>
-			</p:menubar>
-		</h:form>
-	</div>
-</div>
+                    <f:facet name="end">
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+    	</div>
+    </div>
 </ui:composition>

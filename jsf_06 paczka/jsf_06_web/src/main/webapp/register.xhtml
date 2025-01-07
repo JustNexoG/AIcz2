@@ -1,0 +1,65 @@
+<ui:composition template="/templates/main-template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">Rejestracja</ui:define>
+
+    <ui:define name="content">
+        <div class="page-container">
+            <div class="register-card">
+                <p:panel header="Zarejestruj się" styleClass="ui-panel">
+                    <h:form>
+                        <p:messages id="registerMessages" autoUpdate="true" closable="true" />
+
+                        <div class="floating-label-container">
+                            <div class="floating-label">
+                                <p:inputText id="firstName" value="#{registerBB.firstName}" placeholder=" " 
+                                    required="true" requiredMessage="Imię jest wymagane" styleClass="floating-input" />
+                                <label for="firstName">Imię</label>
+                            </div>
+
+                            <div class="floating-label">
+                                <p:inputText id="lastName" value="#{registerBB.lastName}" placeholder=" "
+                                    required="true" requiredMessage="Nazwisko jest wymagane" styleClass="floating-input" />
+                                <label for="lastName">Nazwisko</label>
+                            </div>
+
+                            <div class="floating-label">
+                                <p:inputText id="email" value="#{registerBB.email}" placeholder=" " 
+                                    required="true" requiredMessage="Email jest wymagany" styleClass="floating-input" />
+                                <label for="email">Email</label>
+                            </div>
+
+                            <div class="floating-label">
+                                <p:password id="password" value="#{registerBB.password}" placeholder=" "
+                                    required="true" requiredMessage="Hasło jest wymagane" styleClass="floating-input" />
+                                <label for="password">Hasło</label>
+                            </div>
+
+                            <div class="floating-label">
+                                <p:password id="confirmPassword" value="#{registerBB.confirmPassword}" placeholder=" "
+                                    required="true" requiredMessage="Potwierdzenie hasła jest wymagane" styleClass="floating-input" />
+                                <label for="confirmPassword">Potwierdź hasło</label>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-container">
+                            <p:selectBooleanCheckbox id="terms" value="#{registerBB.termsAccepted}" required="true"
+                                requiredMessage="Musisz zaakceptować regulamin" itemLabel="Akceptuję regulamin serwisu" />
+                        </div>
+
+                        <div class="login-buttons">
+                            <p:commandButton value="Zarejestruj się" action="#{registerBB.register}" update="registerMessages"
+                                icon="pi pi-user-plus" styleClass="ui-button" />
+                            <p:button value="Wróć do logowania" outcome="login.xhtml" styleClass="ui-button-secondary"
+                                icon="pi pi-sign-in" />
+                        </div>
+                    </h:form>
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

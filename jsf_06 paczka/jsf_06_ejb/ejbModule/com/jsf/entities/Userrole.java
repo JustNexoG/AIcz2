@@ -1,39 +1,37 @@
 package com.jsf.entities;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
 import java.sql.Timestamp;
+import jakarta.persistence.*;
 
-
-/**
- * The persistent class for the userrole database table.
- * 
- */
 @Entity
-@NamedQuery(name="Userrole.findAll", query="SELECT u FROM Userrole u")
+@Table(name = "userrole")
 public class Userrole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private UserrolePK id;
+	private UserrolePK id; // zawiera idUser i idRole
 
+	@Column(name = "assignedDate")
 	private Timestamp assignedDate;
 
-	//bi-directional many-to-one association to Role
+	// -- Relacja do tabeli 'roles' poprzez pole 'idRole' w PK --
 	@ManyToOne
-	@JoinColumn(name="idRole")
+	@MapsId("idRole") // mówimy: użyj idRole z PK
+	@JoinColumn(name = "idRole", nullable = false) 
 	private Role role;
 
-	//bi-directional many-to-one association to User
+	// -- Relacja do tabeli 'users' poprzez pole 'idUser' w PK --
 	@ManyToOne
-	@JoinColumn(name="idUser")
+	@MapsId("idUser") // mówimy: użyj idUser z PK
+	@JoinColumn(name = "idUser", nullable = false)
 	private User user;
 
 	public Userrole() {
 	}
 
 	public UserrolePK getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(UserrolePK id) {
@@ -41,7 +39,7 @@ public class Userrole implements Serializable {
 	}
 
 	public Timestamp getAssignedDate() {
-		return this.assignedDate;
+		return assignedDate;
 	}
 
 	public void setAssignedDate(Timestamp assignedDate) {
@@ -49,7 +47,7 @@ public class Userrole implements Serializable {
 	}
 
 	public Role getRole() {
-		return this.role;
+		return role;
 	}
 
 	public void setRole(Role role) {
@@ -57,11 +55,17 @@ public class Userrole implements Serializable {
 	}
 
 	public User getUser() {
-		return this.user;
+		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "Userrole [id=" + id + ", assignedDate=" + assignedDate 
+				+ ", role=" + (role != null ? role.getIdRole() : null)
+				+ ", user=" + (user != null ? user.getIdUser() : null) + "]";
+	}
 }

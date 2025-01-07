@@ -59,7 +59,6 @@ public class PropertyDAO {
         String where = "";
         String orderby = "ORDER BY p.price ASC, p.address";
 
-        // Search by address
         String address = (String) searchParams.get("address");
         if (address != null) {
             if (where.isEmpty()) {
@@ -70,7 +69,6 @@ public class PropertyDAO {
             where += "p.address LIKE :address ";
         }
 
-        // Search by price range
         Double minPrice = (Double) searchParams.get("minPrice");
         if (minPrice != null) {
             if (where.isEmpty()) {
