@@ -14,6 +14,7 @@ import jakarta.inject.Named;
 
 import com.jsf.dao.PropertyDAO;
 import com.jsf.entities.Property;
+import com.jsf.entities.User;
 
 @Named
 @ViewScoped
@@ -34,6 +35,9 @@ public class PropertyEditBB implements Serializable {
 
     @Inject
     private Flash flash;
+    
+    @Inject
+    private loginBB loginBB;
 
     public Property getProperty() {
         return property;
@@ -55,7 +59,37 @@ public class PropertyEditBB implements Serializable {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Brak danych nieruchomości.", null));
                 return PAGE_STAY_AT_THE_SAME;
             }
-            	//Dodawanie nowej 
+            
+         // Walidacja wymaganych pól
+            if(property.getAddress() == null || property.getAddress().trim().isEmpty()) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                        "Adres nieruchomości jest wymagany.", null));
+                return PAGE_STAY_AT_THE_SAME;
+            }
+            if(property.getPrice() == null) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                        "Cena nieruchomości jest wymagana.", null));
+                return PAGE_STAY_AT_THE_SAME;
+            }
+            if(property.getType() == null || property.getType().trim().isEmpty()) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                        "Typ nieruchomości jest wymagany.", null));
+                return PAGE_STAY_AT_THE_SAME;
+            }
+            
+            // Pobierz aktualnie zalogowanego użytkownika
+            User currentUser = loginBB.getLoggedUser();
+            if (currentUser == null) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+                        "Musisz być zalogowany, aby dodać nieruchomość.", null));
+                return "login.xhtml?faces-redirect=true";
+            }
+            // Ustawienie właściciela nieruchomości
+            property.setOwnerId(currentUser.getIdUser());
+            property.setLastModifiedBy(currentUser.getIdUser());
+            property.setLastModifiedDate(new Timestamp(System.currentTimeMillis()));
+            
+            //Dodawanie nowej 
             if (property.getIdProperty() == null) {
                 propertyDAO.create(property);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Nieruchomość została dodana.", null));

@@ -10,6 +10,7 @@ import com.jsf.entities.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Named
 @SessionScoped
@@ -20,6 +21,7 @@ public class loginBB implements Serializable {
     private String password;
     private boolean rememberMe;
     private User loggedUser;
+    private Timestamp lastLogin;
 
     @Inject
     private FacesContext context;
@@ -35,6 +37,9 @@ public class loginBB implements Serializable {
                         "Błędne dane logowania", null));
                 return null;
             }
+            
+            user.setLastLogin(new Timestamp(System.currentTimeMillis()));
+            userDAO.merge(user);  // Zaktualizuj użytkownika w bazie
             loggedUser = user;
             return "main.xhtml?faces-redirect=true";
         } catch(Exception e) {
@@ -43,6 +48,14 @@ public class loginBB implements Serializable {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    public Timestamp getLastLogin() {
+        return lastLogin;
+    }
+    
+    public void setLastLogin(Timestamp lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     public String goToAddProperty() {

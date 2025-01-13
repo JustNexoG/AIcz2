@@ -52,6 +52,14 @@ public class RegisterBB implements Serializable {
                         "Musisz podać adres email!", null));
                 return null;
             }
+            
+         // Sprawdzenie formatu email przy użyciu regex
+            String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+            if (!email.matches(emailPattern)) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Podany adres email ma nieprawidłowy format.", null));
+                return null;
+            }
 
             //Czy email już istnieje
             if (userDAO.isEmailUsed(email)) {

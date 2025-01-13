@@ -13,10 +13,13 @@
 
     <ui:define name="content">
         <div class="property-card">
+        	
             <h:form id="propertyForm">
+            	<p:messages id="formMessages" autoUpdate="true" closable="true" />
                 <h:inputHidden id="p-idProperty" value="#{propertyEditBB.property.idProperty}" />
-
+				
                 <div class="property-form-grid">
+                	
                     <!-- Adres -->
                     <div class="property-floating-label">
                         <p:inputText id="p-address" value="#{propertyEditBB.property.address}"
@@ -43,8 +46,8 @@
                     <!-- Typ transakcji -->
                     <div class="property-floating-label">
                         <p:selectOneMenu id="type" value="#{propertyEditBB.property.type}" required="true"
-                                         styleClass="property-floating-input">
-                            <f:selectItem itemLabel="-- Wybierz --" itemValue="" />
+                                         styleClass="property-floating-input" requiredMessage="Typ transakcji jest wymagany">
+                            <f:selectItem itemLabel="-- Wybierz --" itemValue="" noSelectionOption="true"/>
                             <f:selectItem itemLabel="Sprzedaż" itemValue="Sprzedaż" />
                             <f:selectItem itemLabel="Wynajem" itemValue="Wynajem" />
                         </p:selectOneMenu>
