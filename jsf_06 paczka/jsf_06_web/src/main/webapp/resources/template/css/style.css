@@ -13,8 +13,9 @@ body {
     margin-bottom: 4vh;
 }
 
-
 .header {
+	position: relative;
+    z-index: 1000;
     font-size: 48px;
     font-weight: bold;
     color: #a259ff; 

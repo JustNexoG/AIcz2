@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.application.FacesMessage;
 import com.jsf.dao.UserDAO;
+import com.jsf.dao.UserroleDAO;
 import com.jsf.entities.User;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -28,6 +29,9 @@ public class loginBB implements Serializable {
 
     @Inject
     private UserDAO userDAO;
+    
+    @Inject
+    private UserroleDAO userroleDAO;
 
     public String login() {
         try {
@@ -39,7 +43,7 @@ public class loginBB implements Serializable {
             }
             
             user.setLastLogin(new Timestamp(System.currentTimeMillis()));
-            userDAO.merge(user);  // Zaktualizuj użytkownika w bazie
+            userDAO.merge(user);
             loggedUser = user;
             return "main.xhtml?faces-redirect=true";
         } catch(Exception e) {
@@ -71,6 +75,13 @@ public class loginBB implements Serializable {
         loggedUser = null;
         context.getExternalContext().invalidateSession();
         return "main.xhtml?faces-redirect=true";
+    }
+    
+    public boolean isModerator() {
+        if (loggedUser == null) {
+            return false;
+        }
+        return userroleDAO.userHasRole(loggedUser.getIdUser(), 2);
     }
 
     // Gettery i settery

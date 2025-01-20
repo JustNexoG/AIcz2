@@ -24,5 +24,14 @@ public class UserroleDAO {
                  .setParameter("idUser", idUser)
                  .getResultList();
     }
+    
+    public boolean userHasRole(int userId, int roleId) {
+        String jpql = "SELECT COUNT(ur) FROM Userrole ur WHERE ur.user.idUser = :uid AND ur.role.idRole = :rid";
+        Long count = em.createQuery(jpql, Long.class)
+                       .setParameter("uid", userId)
+                       .setParameter("rid", roleId)
+                       .getSingleResult();
+        return count != null && count > 0;
+    }
 
 }

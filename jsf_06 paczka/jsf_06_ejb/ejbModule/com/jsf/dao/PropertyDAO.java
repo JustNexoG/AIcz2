@@ -40,7 +40,7 @@ public class PropertyDAO {
     public List<Property> getFullList() {
         List<Property> list = null;
 
-        Query query = em.createQuery("SELECT p FROM Property p");
+        Query query = em.createQuery("SELECT DISTINCT p FROM Property p LEFT JOIN FETCH p.propertyImages");
 
         try {
             list = query.getResultList();
@@ -107,6 +107,17 @@ public class PropertyDAO {
             e.printStackTrace();
         }
 
+        return list;
+    }
+    public List<Property> getPropertiesByOwner(int ownerId) {
+        List<Property> list = null;
+        try {
+            Query query = em.createQuery("SELECT p FROM Property p WHERE p.ownerId = :ownerId");
+            query.setParameter("ownerId", ownerId);
+            list = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return list;
     }
 }

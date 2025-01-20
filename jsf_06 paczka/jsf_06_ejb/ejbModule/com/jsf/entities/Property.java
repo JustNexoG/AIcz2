@@ -42,8 +42,16 @@ public class Property implements Serializable {
 	private List<User> users;
 
 	//bi-directional many-to-one association to PropertyImage
-	@OneToMany(mappedBy="property")
+	@OneToMany(mappedBy="property", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<PropertyImage> propertyImages;
+	
+	public String getFirstImagePath() {
+        if (propertyImages != null && !propertyImages.isEmpty()) {
+            // Dodaj ukośnik przed ścieżką, jeśli jest to wymagane
+            return "/" + propertyImages.get(0).getImagePath();
+        }
+        return null;
+    }
 
 	public Property() {
 	}

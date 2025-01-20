@@ -3,14 +3,14 @@ package com.jsfcourse.property;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.primefaces.model.LazyDataModel;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.ejb.EJB;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.Flash;
-
+import jakarta.annotation.PostConstruct;
 import com.jsf.dao.PropertyDAO;
 import com.jsf.entities.Property;
 
@@ -30,15 +30,27 @@ public class PropertyListBB {
 
     @EJB
     PropertyDAO propertyDAO;
+    
+    private LazyDataModel<Property> lazyModel;
+    private Property selectedProperty;
 
-    public String getAddress() {
-        return address;
+    @PostConstruct
+    public void init() {
+        lazyModel = new LazyPropertyDataModel(propertyDAO);
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+    public LazyDataModel<Property> getLazyModel() { return lazyModel; }
+    
+    public Property getSelectedProperty() {
+        return selectedProperty;
     }
 
+    public void setSelectedProperty(Property selectedProperty) {
+        this.selectedProperty = selectedProperty;
+    }
+    
     public List<Property> getFullList() {
         return propertyDAO.getFullList();
     }

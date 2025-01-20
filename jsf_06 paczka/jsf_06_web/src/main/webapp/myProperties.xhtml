@@ -1,0 +1,38 @@
+<ui:composition template="/templates/main-template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="title">Moje nieruchomości</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <p:dataTable value="#{myPropertiesBB.myProperties}" var="p" paginator="true" rows="10">
+                <p:column headerText="Adres">
+                    <h:outputText value="#{p.address}" />
+                </p:column>
+                
+                <p:column headerText="Cena">
+                    <h:outputText value="#{p.price}" />
+                </p:column>
+                
+                <p:column headerText="Typ">
+                    <h:outputText value="#{p.type}" />
+                </p:column>
+                
+                <p:column headerText="Opcje">
+                    <p:commandButton value="Edytuj" 
+                                     action="#{myPropertiesBB.editProperty(p)}" 
+                                     rendered="#{loginBB.loggedUser != null and loginBB.loggedUser.idUser eq p.ownerId}" />
+                    
+                    <p:commandButton value="Usuń" 
+                                     action="#{myPropertiesBB.deleteProperty(p)}" 
+                                     update="@form"
+                                     rendered="#{loginBB.loggedUser != null and loginBB.loggedUser.idUser eq p.ownerId}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

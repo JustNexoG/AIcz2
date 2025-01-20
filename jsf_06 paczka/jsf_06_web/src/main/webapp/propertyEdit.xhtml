@@ -14,7 +14,7 @@
     <ui:define name="content">
         <div class="property-card">
         	
-            <h:form id="propertyForm">
+            <h:form id="propertyForm" enctype="multipart/form-data">
             	<p:messages id="formMessages" autoUpdate="true" closable="true" />
                 <h:inputHidden id="p-idProperty" value="#{propertyEditBB.property.idProperty}" />
 				
@@ -47,14 +47,21 @@
                     <div class="property-floating-label">
                         <p:selectOneMenu id="type" value="#{propertyEditBB.property.type}" required="true"
                                          styleClass="property-floating-input" requiredMessage="Typ transakcji jest wymagany">
-                            <f:selectItem itemLabel="-- Wybierz --" itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="-- Wybierz --" itemValue="#{null}" noSelectionOption="true"/>
                             <f:selectItem itemLabel="Sprzedaż" itemValue="Sprzedaż" />
                             <f:selectItem itemLabel="Wynajem" itemValue="Wynajem" />
                         </p:selectOneMenu>
                         <h:outputLabel for="type">Typ transakcji</h:outputLabel>
                     </div>
                 </div>
+				
+				<div class="property-floating-label full-width">
+					<h:outputLabel for="propertyForm:uploadedImage">Wgraj zdjęcie</h:outputLabel>
+			        <p:fileUpload value="#{propertyEditBB.uploadedImage}" mode="simple" 
+			                       styleClass="property-fileupload" />
 
+			    </div>
+				
                 <div class="property-buttons">
                     <p:commandButton value="Zapisz" action="#{propertyEditBB.saveData}"
                                      update="@form" styleClass="ui-button" />

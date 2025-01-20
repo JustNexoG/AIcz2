@@ -3,7 +3,7 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <div class="header">
+    <div class="header" id="header">
 	    <div class="card">
             <h:form>
                 <p:menubar hideDelay="1000">
@@ -25,6 +25,8 @@
                     <!-- Po zalogowaniu -->
                     <p:submenu label="Zalogowano na #{loginBB.loggedUser.firstName} (rola: #{roleBB.userRoles})" rendered="#{not empty loginBB.loggedUser}">
                         <p:menuitem value="Wyloguj" action="#{loginBB.logout}" />
+                        <p:menuitem value="Edytuj profil" icon="pi pi-fw pi-user-edit" outcome="editProfile.xhtml" rendered="#{not empty loginBB.loggedUser}" />
+                        <p:menuitem value="Moje ogłoszenia" icon="pi pi-fw pi-home" outcome="myProperties.xhtml" rendered="#{not empty loginBB.loggedUser}" />
                     </p:submenu>
 
                     <f:facet name="end">
